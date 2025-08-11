@@ -1,4 +1,5 @@
-import { IsNotEmpty } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -8,5 +9,7 @@ export class CreateUserDto {
   email: string;
 
   @IsNotEmpty()
+  @IsNumber()
+  @Type(() => Number)
   age: number;
 }

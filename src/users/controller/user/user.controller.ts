@@ -7,13 +7,14 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  UsePipes,
-  ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
+import { AuthGuard } from 'src/users/guards/auth/auth.guard';
 import { UsersService } from 'src/users/services/users/users.service';
 
 @Controller('users')
+@UseGuards(AuthGuard)
 export class UserController {
   constructor(private readonly userService: UsersService) {}
   @Get()
@@ -32,9 +33,8 @@ export class UserController {
   }
 
   @Post('create')
-  @UsePipes(new ValidationPipe())
   createUser(@Body() userData: CreateUserDto) {
-    console.log(userData);
+    console.log(typeof userData.age);
     return this.userService.createUsers(userData);
   }
 }
